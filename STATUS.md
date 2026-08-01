@@ -11,3 +11,5 @@ All timestamps use Asia/Kolkata (IST).
 - **Functional core implemented** — added local job matching with a mandatory human-submission flag, practice content with live-assessment refusal checks, transparent market indicators with a 95% uncertainty range, and Zstd-compressed Parquet conversion through embedded DuckDB.
 - **Incremental validation** — job, practice, and stock unit tests passed. An initial DuckDB path-binding failure was found during end-to-end conversion and corrected before release.
 - **Repository hardening** — added least-privilege continuous integration, contribution rules, a private vulnerability-reporting path, and repeatable local quality checks.
+- **Local consent ledger** — added SQLite-backed pending/approved job-draft reviews. Approval records user consent but deliberately performs no external submission.
+- **Vedanta retrieval** — added a credential-free `VEDL.NS` daily-history downloader with source metadata, minimum-data validation, rate-limit errors, and ignored local output.

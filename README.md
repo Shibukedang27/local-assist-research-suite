@@ -27,6 +27,23 @@ Use synthetic examples only:
 .venv/bin/local-assist stock-analyze examples/vedanta.synthetic.csv
 ```
 
+Create a local job-review entry (the approval command records consent but never submits):
+
+```sh
+.venv/bin/local-assist jobs-score examples/candidate.example.json examples/job.example.txt \
+  --review-db data/private/reviews.sqlite3
+.venv/bin/local-assist jobs-approve 1
+```
+
+Retrieve and analyze recent Vedanta daily data:
+
+```sh
+.venv/bin/local-assist stock-fetch --months 12
+.venv/bin/local-assist stock-analyze data/raw/vedanta.csv
+```
+
+The downloader uses Yahoo Finance's chart endpoint without credentials. Availability is not guaranteed; source outages and rate limits are reported rather than silently replaced with invented data.
+
 See [SAFETY.md](SAFETY.md), [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md), and [STATUS.md](STATUS.md).
 
 ## Data representation
@@ -36,4 +53,3 @@ Operational events use SQLite. Larger tabular datasets can be converted to compr
 ## License
 
 Apache-2.0. See [LICENSE](LICENSE).
-
