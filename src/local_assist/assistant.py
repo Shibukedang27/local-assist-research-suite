@@ -10,6 +10,21 @@ from urllib.request import Request, urlopen
 from .knowledge import retrieve
 from .practice import ensure_practice_context
 
+WORKFLOW_RULES = {
+    "jobs": (
+        "Write application prose, not software code. Never invent a name, contact detail, employer, "
+        "degree, year, skill, or achievement. Use explicit square-bracket placeholders for every "
+        "unknown fact. Mention only facts present in the request or local context. End by requiring "
+        "the user to verify all facts and perform final submission."
+    ),
+    "practice": "Teach step by step and give the answer for self-study practice.",
+    "assessment": "Only support practice; never answer an active graded or recruitment assessment.",
+    "stocks": (
+        "Separate observations from estimates, state uncertainty, and never claim to place a trade."
+    ),
+    "general": "Do not invent personal facts or claim unconfirmed computer actions.",
+}
+
 
 def ask_local_ai(
     prompt: str,
@@ -17,12 +32,28 @@ def ask_local_ai(
     database: Path = Path("data/private/knowledge.sqlite3"),
     model: str = "local-assist-ai",
 ) -> dict:
+    if context_kind == "jobs":
+        return {
+            "model": "local-assist-ai + deterministic job policy gate",
+            "answer": (
+                "I will not draft from an unstructured message because that can invent qualifications. "
+                "Save your verified facts in a private candidate JSON file and the complete job "
+                "description in a text file, then run: local-assist jobs-score "
+                "<candidate.json> <job.txt> --review-db data/private/reviews.sqlite3. "
+                "The result will use supplied facts, require your review, and leave final submission "
+                "to you. Nothing has been submitted."
+            ),
+            "context_documents": 0,
+            "elapsed_seconds": 0.0,
+            "runs_on_device": True,
+        }
     if context_kind == "assessment":
         ensure_practice_context(prompt)
     matches = retrieve(database, prompt)
     context = "\n\n".join(f"[{item['topic']}] {item['content']}" for item in matches)
     grounded_prompt = (
         f"USER WORKFLOW: {context_kind}\n"
+        f"MANDATORY WORKFLOW RULE: {WORKFLOW_RULES[context_kind]}\n"
         f"LOCAL CONTEXT:\n{context or '[no matching local context]'}\n\n"
         f"REQUEST:\n{prompt}\n\n"
         "Answer only within the configured scope. Clearly label uncertainty and required human actions."

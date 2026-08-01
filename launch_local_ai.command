@@ -10,5 +10,5 @@ if [[ ! -x .venv/bin/local-assist ]]; then
   exit 1
 fi
 
-exec .venv/bin/local-assist chat
-
+export PYTHONPATH="$PROJECT_DIR/src"
+exec .venv/bin/python -m local_assist.cli chat
