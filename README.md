@@ -73,6 +73,19 @@ Run the local behavioral benchmark:
 
 The benchmark checks a small set of essential boundaries and publishes its responses for inspection. It is a smoke test, not evidence that every future answer will be correct.
 
+## From-scratch experimental model
+
+`Local Assist Tiny` uses a transformer and byte tokenizer implemented in this repository. Its weights begin random and are trained locally; it imports no pretrained checkpoint.
+
+```sh
+.venv/bin/python -m pip install -e '.[scratch]'
+.venv/bin/python scripts/generate_scratch_corpus.py --count 18000
+.venv/bin/python scripts/train_scratch_model.py --steps 1500
+.venv/bin/python scripts/run_scratch_model.py "Explain 84 divided by 2 as practice."
+```
+
+This small experiment can learn narrow patterns but cannot match a foundation model trained on billions of tokens. The deterministic policy gates remain authoritative for job submission, active assessments, and trading.
+
 See [SAFETY.md](SAFETY.md), [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md), and [STATUS.md](STATUS.md).
 
 ## Data representation
