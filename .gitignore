@@ -12,6 +12,7 @@ artifacts/
 *.sqlite3
 *.db
 *.parquet
+*.jsonl
 cookies*.json
 resume*
 credentials*

@@ -44,6 +44,35 @@ Retrieve and analyze recent Vedanta daily data:
 
 The downloader uses Yahoo Finance's chart endpoint without credentials. Availability is not guaranteed; source outages and rate limits are reported rather than silently replaced with invented data.
 
+## Install the on-device AI
+
+Ollama and `qwen2.5:3b` must be available. Create the scoped local model and private knowledge dataset:
+
+```sh
+ollama create local-assist-ai -f Modelfile
+.venv/bin/python scripts/generate_private_dataset.py --count 600
+.venv/bin/local-assist convert data/private/practice.jsonl data/processed/practice.parquet
+.venv/bin/local-assist knowledge-build \
+  data/private/practice.jsonl SAFETY.md docs/ARCHITECTURE.md
+.venv/bin/local-assist ask --workflow practice "Teach me a percentage shortcut"
+```
+
+For an ongoing session, double-click `launch_local_ai.command` in Finder or run:
+
+```sh
+.venv/bin/local-assist chat
+```
+
+The generated dataset uses a fixed seed and is synthetic, so it carries no copied question-bank or personal data. Parquet is the compact binary/columnar copy; the SQLite FTS index supports fast local retrieval. The model and both stores remain on the Mac.
+
+Run the local behavioral benchmark:
+
+```sh
+.venv/bin/python scripts/evaluate_local_ai.py
+```
+
+The benchmark checks a small set of essential boundaries and publishes its responses for inspection. It is a smoke test, not evidence that every future answer will be correct.
+
 See [SAFETY.md](SAFETY.md), [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md), and [STATUS.md](STATUS.md).
 
 ## Data representation

@@ -19,6 +19,7 @@ dev = ["pytest>=8,<10", "ruff>=0.12,<1"]
 [project.scripts]
 local-assist = "local_assist.cli:main"
 
+
 [tool.hatch.build.targets.wheel]
 packages = ["src/local_assist"]
 
@@ -28,4 +29,3 @@ testpaths = ["tests"]
 [tool.ruff]
 line-length = 100
 target-version = "py311"
-
