@@ -85,7 +85,7 @@ def answer(model: Any, prompt: str) -> dict:
     }
 
 
-def load_default(path: Path = Path("artifacts/local-assist-tiny")) -> "ScratchTransformer":
+def load_default(path: Path = Path("artifacts/local-assist-tiny")) -> ScratchTransformer:
     if not path.exists():
         raise RuntimeError("From-scratch checkpoint is missing; run scripts/train_scratch_model.py")
     from .scratch_model import load_model
