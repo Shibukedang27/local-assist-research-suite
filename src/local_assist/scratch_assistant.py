@@ -4,8 +4,10 @@ from __future__ import annotations
 
 import re
 from pathlib import Path
+from typing import TYPE_CHECKING, Any
 
-from .scratch_model import ScratchTransformer, generate, load_model
+if TYPE_CHECKING:
+    from .scratch_model import ScratchTransformer
 
 LIVE_TERMS = ("live", "proctored", "active hiring", "recruitment test", "graded exam")
 TRADE_TERMS = (
@@ -38,7 +40,7 @@ def exact_math(prompt: str) -> str | None:
     return None
 
 
-def answer(model: ScratchTransformer, prompt: str) -> dict:
+def answer(model: Any, prompt: str) -> dict:
     lowered = prompt.lower()
     if any(term in lowered for term in LIVE_TERMS) and any(
         term in lowered for term in ("exam", "assessment", "hiring", "test")
@@ -70,6 +72,8 @@ def answer(model: ScratchTransformer, prompt: str) -> dict:
     elif solved := exact_math(prompt):
         response, route = solved, "exact-math"
     else:
+        from .scratch_model import generate
+
         response = generate(model, f"<user>{prompt}</user><assistant>")
         route = "scratch-transformer"
     return {
@@ -81,7 +85,9 @@ def answer(model: ScratchTransformer, prompt: str) -> dict:
     }
 
 
-def load_default(path: Path = Path("artifacts/local-assist-tiny")) -> ScratchTransformer:
+def load_default(path: Path = Path("artifacts/local-assist-tiny")) -> "ScratchTransformer":
     if not path.exists():
         raise RuntimeError("From-scratch checkpoint is missing; run scripts/train_scratch_model.py")
+    from .scratch_model import load_model
+
     return load_model(path)
