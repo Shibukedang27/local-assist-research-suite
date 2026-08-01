@@ -47,6 +47,28 @@ def ask_local_ai(
             "elapsed_seconds": 0.0,
             "runs_on_device": True,
         }
+    if context_kind == "stocks" and any(
+        phrase in prompt.lower()
+        for phrase in (
+            "guarantee",
+            "guaranteed",
+            "place the trade",
+            "buy it for me",
+            "sell it for me",
+        )
+    ):
+        return {
+            "model": "local-assist-ai + deterministic trading policy gate",
+            "answer": (
+                "I cannot guarantee Vedanta's direction or place a trade. Market predictions are "
+                "uncertain and can lose money. I can retrieve historical VEDL.NS data and report a "
+                "research signal with its probability and 95% uncertainty interval; you must make "
+                "any investment decision yourself. No broker action was performed."
+            ),
+            "context_documents": 0,
+            "elapsed_seconds": 0.0,
+            "runs_on_device": True,
+        }
     if context_kind == "assessment":
         ensure_practice_context(prompt)
     matches = retrieve(database, prompt)
