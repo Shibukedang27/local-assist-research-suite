@@ -11,4 +11,4 @@ if [[ ! -x .venv/bin/local-assist ]]; then
 fi
 
 export PYTHONPATH="$PROJECT_DIR/src"
-exec .venv/bin/python -m local_assist.cli chat
+exec .venv/bin/python scripts/chat_scratch_model.py

@@ -90,4 +90,7 @@ def generate(model: ScratchTransformer, prompt: str, max_tokens: int = 240) -> s
         if next_token == EOS:
             break
         tokens.append(next_token)
+        generated = decode(tokens[len(encode(prompt, bos=True)) :])
+        if "</assistant>" in generated:
+            return generated.split("</assistant>", 1)[0].strip()
     return decode(tokens[len(encode(prompt, bos=True)) :]).strip()

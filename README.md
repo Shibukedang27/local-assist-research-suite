@@ -44,9 +44,11 @@ Retrieve and analyze recent Vedanta daily data:
 
 The downloader uses Yahoo Finance's chart endpoint without credentials. Availability is not guaranteed; source outages and rate limits are reported rather than silently replaced with invented data.
 
-## Install the on-device AI
+## Legacy adapted model (not from scratch)
 
-Ollama and `qwen2.5:3b` must be available. Create the scoped local model and private knowledge dataset:
+The earlier Ollama workflow adapts `qwen2.5:3b` and therefore does **not** meet the from-scratch definition. It is retained only for reproducibility and is not the default launcher. The default is `Local Assist Tiny` below.
+
+To reproduce the older adapted experiment:
 
 ```sh
 ollama create local-assist-ai -f Modelfile
@@ -57,7 +59,7 @@ ollama create local-assist-ai -f Modelfile
 .venv/bin/local-assist ask --workflow practice "Teach me a percentage shortcut"
 ```
 
-For an ongoing session, double-click `launch_local_ai.command` in Finder or run:
+The legacy session command is:
 
 ```sh
 .venv/bin/local-assist chat
@@ -73,7 +75,7 @@ Run the local behavioral benchmark:
 
 The benchmark checks a small set of essential boundaries and publishes its responses for inspection. It is a smoke test, not evidence that every future answer will be correct.
 
-## From-scratch experimental model
+## From-scratch default model
 
 `Local Assist Tiny` uses a transformer and byte tokenizer implemented in this repository. Its weights begin random and are trained locally; it imports no pretrained checkpoint.
 
@@ -82,9 +84,12 @@ The benchmark checks a small set of essential boundaries and publishes its respo
 .venv/bin/python scripts/generate_scratch_corpus.py --count 18000
 .venv/bin/python scripts/train_scratch_model.py --steps 1500
 .venv/bin/python scripts/run_scratch_model.py "Explain 84 divided by 2 as practice."
+.venv/bin/python scripts/chat_scratch_model.py
 ```
 
 This small experiment can learn narrow patterns but cannot match a foundation model trained on billions of tokens. The deterministic policy gates remain authoritative for job submission, active assessments, and trading.
+
+Double-click `launch_local_ai.command` in Finder to start this from-scratch model. Training outputs remain local under `artifacts/`; compact metrics and acceptance results are published under `benchmarks/`.
 
 See [SAFETY.md](SAFETY.md), [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md), and [STATUS.md](STATUS.md).
 

@@ -1,0 +1,19 @@
+{
+  "model": "local-assist-tiny-from-scratch",
+  "random_initialization": true,
+  "pretrained_weights": false,
+  "tokenizer": "fixed UTF-8 byte vocabulary implemented in this repository",
+  "parameters": 1907520,
+  "training_tokens": 3095202,
+  "validation_tokens": 162906,
+  "steps": 1500,
+  "batch_size": 12,
+  "seed": 20260801,
+  "device": "Apple Metal GPU",
+  "elapsed_seconds": 74.5,
+  "initial_validation_loss": 4.6,
+  "initial_validation_perplexity": 99.48,
+  "final_validation_loss": 0.1256,
+  "final_validation_perplexity": 1.13,
+  "generalization_warning": "Raw unseen generation failed arithmetic and one trading paraphrase; the default hybrid uses exact gates for high-stakes routes."
+}
