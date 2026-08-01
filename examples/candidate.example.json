@@ -1,0 +1,7 @@
+{
+  "display_name": "Example Candidate",
+  "skills": ["Python", "SQL", "Git", "data analysis"],
+  "education": "Bachelor degree",
+  "experience": ["Built local automation", "Analyzed tabular datasets"]
+}
+

@@ -1,0 +1,8 @@
+{
+  "context": "self-study practice",
+  "prompt": "A train travels 120 km in 2 hours. What is its average speed?",
+  "options": ["40 km/h", "60 km/h", "80 km/h", "240 km/h"],
+  "answer": "60 km/h",
+  "explanation": "Average speed equals distance divided by time: 120 / 2 = 60 km/h."
+}
+
