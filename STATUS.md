@@ -10,3 +10,4 @@ All timestamps use Asia/Kolkata (IST).
 - **Public repository created** — published the sanitized foundation to GitHub on the `main` branch.
 - **Functional core implemented** — added local job matching with a mandatory human-submission flag, practice content with live-assessment refusal checks, transparent market indicators with a 95% uncertainty range, and Zstd-compressed Parquet conversion through embedded DuckDB.
 - **Incremental validation** — job, practice, and stock unit tests passed. An initial DuckDB path-binding failure was found during end-to-end conversion and corrected before release.
+- **Repository hardening** — added least-privilege continuous integration, contribution rules, a private vulnerability-reporting path, and repeatable local quality checks.
